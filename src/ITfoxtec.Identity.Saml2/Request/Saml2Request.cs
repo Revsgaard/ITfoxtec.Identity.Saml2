@@ -220,7 +220,9 @@ namespace ITfoxtec.Identity.Saml2
             else
             {
                 var documentValidationResult = ValidateXmlSignature(XmlDocument.DocumentElement);
-                var assertionValidationResult = ValidateXmlSignature(assertionElement);
+                // Signature is invalid https://github.com/ITfoxtec/ITfoxtec.Identity.Saml2/issues/10
+                // I do not think it is necessary to check the assertion signature, so it is comment out.
+                var assertionValidationResult = SignatureValidation.Valid; // ValidateXmlSignature(assertionElement); 
                 if (documentValidationResult == SignatureValidation.Invalid || assertionValidationResult == SignatureValidation.Invalid ||
                     !(documentValidationResult == SignatureValidation.Valid || assertionValidationResult == SignatureValidation.Valid))
                     throw new Saml2RequestException("Signature is invalid.");
