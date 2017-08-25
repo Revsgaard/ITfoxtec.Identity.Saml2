@@ -23,6 +23,14 @@ namespace ITfoxtec.Identity.Saml2.Util
             return new X509Certificate2(path, password);
         }
 
+        public static X509Certificate2 Load(string path, string password, X509KeyStorageFlags flags)
+        {
+            if (string.IsNullOrWhiteSpace(path)) throw new ArgumentNullException(nameof(path));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentNullException(nameof(password));
+
+            return new X509Certificate2(path, password, flags);
+        }
+
         public static X509Certificate2 Load(string path, SecureString password)
         {
             if (string.IsNullOrWhiteSpace(path)) throw new ArgumentNullException(nameof(path));
