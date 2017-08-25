@@ -8,7 +8,7 @@ namespace ITfoxtec.Identity.Saml2.Schemas
         /// <summary>
         /// SAML 2.0 Authentication Type.
         /// </summary>
-        public const string AuthenticationScheme = "saml2";
+        public static string AuthenticationScheme = "saml2";
 
         /// <summary>
         /// SAML Version Number.

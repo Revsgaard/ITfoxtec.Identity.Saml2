@@ -1,6 +1,6 @@
 ﻿using ITfoxtec.Identity.Saml2.Schemas;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
 using System;
 using System.Security.Claims;
 using System.Threading;
@@ -39,7 +39,7 @@ namespace ITfoxtec.Identity.Saml2.MvcCore
                 principal = claimsTransform(principal);
             }
 
-            await httpContext.Authentication.SignInAsync(Saml2Constants.AuthenticationScheme, principal, 
+            await httpContext.SignInAsync(Saml2Constants.AuthenticationScheme, principal,
                 new AuthenticationProperties
                 {
                     AllowRefresh = false,

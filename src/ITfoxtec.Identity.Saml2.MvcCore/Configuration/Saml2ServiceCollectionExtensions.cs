@@ -1,9 +1,7 @@
-﻿using ITfoxtec.Identity.Saml2.Cryptography;
+﻿using ITfoxtec.Identity.Saml2.Schemas;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ITfoxtec.Identity.Saml2.MvcCore.Configuration
 {
@@ -13,8 +11,20 @@ namespace ITfoxtec.Identity.Saml2.MvcCore.Configuration
         /// Add SAML 2.0 configuration.
         /// </summary>
         public static IServiceCollection AddSaml2(this IServiceCollection services, Saml2Configuration configuration)
-        {           
+        {
+            return AddSaml2(services, configuration, options =>
+            {
+                options.LoginPath = "/Auth/Login";
+                options.LogoutPath = "/Auth/Login";
+            });
+        }
+
+        public static IServiceCollection AddSaml2(this IServiceCollection services, Saml2Configuration configuration, Action<CookieAuthenticationOptions> configureOptions)
+        {
             services.AddSingleton(configuration);
+
+            Saml2Constants.AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            services.AddAuthentication(Saml2Constants.AuthenticationScheme).AddCookie(configureOptions);
 
             return services;
         }
